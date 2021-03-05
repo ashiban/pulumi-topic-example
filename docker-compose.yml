@@ -1,0 +1,34 @@
+version: '3.8'
+# copied from https://github.com/localstack/localstack/blob/master/docker-compose.yml
+services:
+  localstack:
+    container_name: localstack
+    image: localstack/localstack
+    networks:
+      - localstack
+    ports:
+      - "4566:4566"
+      - "4567:4567"
+      - "4571:4571"
+      - "8081:8081"
+    environment:
+      - SERVICES=${SERVICES- }
+      # - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+      - PORT_WEB_UI=8081
+      - LAMBDA_EXECUTOR=docker
+      - LAMBDA_REMOTE_DOCKER=false # your Lambda function definitions will be passed to the container by mounting a volume (potentially faster). This requires to have the Docker client and the Docker host on the same machine.
+      - LAMBDA_DOCKER_NETWORK=localstack
+      - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY- }
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - HOST_TMP_FOLDER=${TMPDIR:-/tmp/localstack}
+      - HOSTNAME_EXTERNAL=localstack
+      - LAMBDA_REMOVE_CONTAINERS=true
+    volumes:
+      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+networks:
+  localstack:
+    name: localstack
+

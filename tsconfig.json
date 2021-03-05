@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "ES2019",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "outDir": "./static/dist/",
+        "skipLibCheck": true,
+        "strictNullChecks": true,
+    },
+    "files": [
+        "index.ts"
+    ]
+}
